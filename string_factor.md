@@ -196,3 +196,16 @@ data_marj <-
   ) %>% 
   filter(!(State %in% c("Total U.S.", "Northeast", "Midwest", "South", "West"))) 
 ```
+
+## NSDUH– factors
+
+``` r
+data_marj %>% 
+  filter(age == "12-17") %>% 
+  mutate(State = fct_reorder(State,percent)) %>% 
+  ggplot(aes(State, y = percent, color = year)) + 
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+![](string_factor_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
