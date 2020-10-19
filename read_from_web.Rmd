@@ -32,3 +32,36 @@ drug_use_html %>%
     as.tibble()
 ```
 
+##Star Wars Movie Info
+
+```{r}
+swm_html <- 
+  read_html("https://www.imdb.com/list/ls070150896/")
+```
+
+Grab elements that I want.
+
+```{r}
+title_vec <-
+    swm_html %>% 
+    html_nodes(css = ".lister-item-header a") %>% 
+    html_text()
+
+gross_rev_vec <-
+    swm_html %>% 
+    html_nodes(css = ".text-muted .ghost~ .text-muted+ span") %>% 
+    html_text()
+
+run_time_vec <- 
+    swm_html %>% 
+    html_nodes(css = ".runtime") %>% 
+    html_text()
+
+swm_df <- 
+    tibble(
+        title = title_vec, 
+        gross_rev = gross_rev_vec,
+        runtime = run_time_vec
+    )
+```
+

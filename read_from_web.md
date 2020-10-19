@@ -72,3 +72,36 @@ drug_use_html %>%
     ## The signature and semantics have changed, see `?as_tibble`.
     ## This warning is displayed once every 8 hours.
     ## Call `lifecycle::last_warnings()` to see where this warning was generated.
+
+\#\#Star Wars Movie Info
+
+``` r
+swm_html <- 
+  read_html("https://www.imdb.com/list/ls070150896/")
+```
+
+Grab elements that I want.
+
+``` r
+title_vec <-
+    swm_html %>% 
+    html_nodes(css = ".lister-item-header a") %>% 
+    html_text()
+
+gross_rev_vec <-
+    swm_html %>% 
+    html_nodes(css = ".text-muted .ghost~ .text-muted+ span") %>% 
+    html_text()
+
+run_time_vec <- 
+    swm_html %>% 
+    html_nodes(css = ".runtime") %>% 
+    html_text()
+
+swm_df <- 
+    tibble(
+        title = title_vec, 
+        gross_rev = gross_rev_vec,
+        runtime = run_time_vec
+    )
+```
