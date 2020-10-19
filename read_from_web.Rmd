@@ -1,0 +1,34 @@
+---
+title: "Data Wrangling 2"
+subtitle : "Read From Web"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+library(rvest)
+library(httr)
+```
+
+## Scrape a Table
+First table from the page:
+
+read in the html:
+```{r}
+data_url <- "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+drug_use_html <- read_html(data_url)
+
+drug_use_html
+```
+extract the table; focus on the first one
+
+```{r}
+tabl_marj <-
+drug_use_html %>% 
+    html_nodes(css = "table") %>% 
+    first() %>% 
+    html_table() %>% 
+    slice(-1) %>% 
+    as.tibble()
+```
+
